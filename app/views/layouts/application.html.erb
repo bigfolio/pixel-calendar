@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+  <%= stylesheet_link_tag '960', 'reset', 'text', 'pixelcal', 'jquery-ui-1.8rc1.custom', 'jqtransform', :media => "all" %>
+  
+  <%= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js' %>
+  <%= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js' %>
+  <%= javascript_include_tag 'jquery.jqtransform' %>
+  <script src="http://maps.google.com/maps?file=api&v=2&sensor=false&key=ABQIAAAAA3hCSwSL17Cndy8STTwCShSIy_WAr7UwMnWXIzgcAQul7TtErhSnjl_RyqcqQ8YjomeI60Y5yHM6EQ" type="text/javascript"></script>
+  <%= fb_connect_javascript_tag %>
+  <%= yield :head %>
+	<script type="text/javascript">
+    $(function() {
+  		<%= yield :onload %>
+  	});
+  	var disqus_developer = 1;
+  </script>
+  <%= init_fb_connect "XFBML", :js => :jquery %>
+	<title>application.html</title>
+	
+</head>
+
+<body>
+
+<div id="header_outer">
+  <div id="header_inner" class="container_12">
+    <div class="grid_6">
+      <h1 id="logo"><%= link_to image_tag('top-logo.png', :alt => 'PixelCal-find and attend photography and video events'), root_url %></h1>
+    </div>
+    <div class="grid_6">
+      <%= render 'shared/login' %>
+      <%= yield :top %>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+
+
+<div id="main_outer">
+  <div id="main_inner" class="container_12">
+    <div class="grid_8">
+      <%= yield %>
+    </div>
+    <div class="grid_4" id="sidebar">
+      <%= yield :sidebar %>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+<%= yield :closing %>
+</body>
+</html>

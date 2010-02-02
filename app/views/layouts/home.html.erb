@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+  <%= stylesheet_link_tag '960', 'reset', 'text', 'pixelcal', :media => "all" %>
+  
+  <%= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js' %>
+  <%= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js' %>
+  
+  <%= fb_connect_javascript_tag %>
+  <%= yield :head %>
+	<script type="text/javascript">
+    $(function() {
+  		<%= yield :onload %>
+  	});
+  </script>
+  <%= init_fb_connect "XFBML", :js => :jquery %>
+	<title>PixelCal: Photography &amp; Video workshops, conferences, trade-shows, events, and get-togethers</title>
+	
+</head>
+
+<body>
+
+<div id="header_outer">
+  <div id="header_inner" class="container_12">
+    <div class="grid_6">
+      <h1 id="logo"><%= image_tag 'top-logo.png', :alt => 'PixelCal-find and attend photography and video events' %></h1>
+    </div>
+    <div class="grid_6">
+      <%= render 'shared/login' %>
+      <%= yield :top %>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+
+<div id="main_outer">
+  <div id="main_inner" class="container_12">
+    <div class="grid_12">
+      <h2 class="home_splash">Learn your DSLR, become a pro, organize a shoot with friends, get started with HD video &#8230;</h2>
+      <h3 class="home_splash">The best photography events, workshops, &amp; get-togethers</h3>
+    </div>
+    <div class="clear"></div>
+    
+    <div class="grid_8" id="featured_event">
+      <span id="featured_event_caption">Featured Event ... </span>
+      <div id="featured_image"><%= link_to image_tag('featured.jpg'), event_url(2) %></div>
+    </div>
+    <div class="grid_4">
+      <div id="home_new_event">
+        <h3>Organizing an Event?</h3>
+        <p id="new_event_link"><%= link_to image_tag('new_event_button.png'), new_event_path %></p>
+        <ul>
+          <li>Add any event for free</li>
+          <li>Sell tickets with <a href="http://paypal.com">PayPal</a></li>
+          <li>Instant map</li>
+        </ul>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+
+<div id="lower_outer">
+  <div id="lower_inner" class="container_12">
+    <%= yield %>
+  </div>
+</div>
+
+<div id="footer_outer">
+  <div id="footer_inner" class="container_12">
+    <div class="grid_4">
+      <h2>Pixelcal Photo &amp; Video Events</h2>
+    </div>
+    <div class="grid_4">
+      <h2>About Pixelcal</h2>
+    </div>
+    <div class="grid_4">
+      <h2>Help &amp; Questions</h2>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+
+</body>
+</html>

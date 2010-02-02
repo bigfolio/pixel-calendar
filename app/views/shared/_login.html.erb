@@ -1,0 +1,28 @@
+<% if logged_in? %>
+<div id="profile" class="login_container">
+  <h2>Howdy <%= current_user.name %> <span><%= link_to 'profile', profile_url %></span> <span><%= link_to 'Logout', logout_path unless current_user.facebook_user? %></span></h2>
+  <% if current_user.facebook_user? %>
+  <div id="fb_pic"><fb:profile-pic size="square" uid="<%= current_user.fb_user_id%>" facebook-logo="false" size="thumb"></fb:profile-pic></div>
+  <p><a href="#" onclick='FB.Connect.logoutAndRedirect("/logout")'>Logout</a></p>
+  <% else %>
+  <div id="fb_login"><%= fb_login_button('window.location = "/users/link_user_accounts";')%></div>
+  <div id="local_login">connect your facebook account</div>
+  <% end %>  
+</div>
+<% else %>
+<div id="login" class="login_container">
+  <h2>Hello Friend <span>login with Facebook and add events!</span> <span><%= link_to 'signup now', signup_path %></span></h2>
+  <div id="fb_login"><%= fb_login_button('window.location = "/users/link_user_accounts";')%></div>
+
+  <div id="local_login">
+    <% form_tag session_path do -%>
+      <span>OR</span>
+      <%= text_field_tag 'login', @login, :value => 'Login', :size => 6 %>
+      <%= password_field_tag 'password', nil, :value => '123456', :size => 6 %>
+      <%= submit_tag 'Log in' %>
+    <% end -%>
+  </div>
+  
+  <div class="clear"></div>
+</div>
+<% end %>

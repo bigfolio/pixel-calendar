@@ -1,0 +1,26 @@
+<% content_for :top do %>
+
+
+
+
+
+<% end %>
+
+
+
+<div class="grid_4">
+  <h2>Upcoming</h2>
+  <ul id="upcoming" class="home_list">
+    <%= render :partial => 'list', :collection => @upcoming %>
+  </ul>
+</div>
+<div class="grid_4">
+  <h2>Recently Added</h2>
+  <ul id="recently_added" class="home_list">
+    <%= render :partial => 'list', :collection => @recently_added %>
+  </ul>
+</div>
+<div class="grid_4">
+  <h2>Find an Event Near You</h2>
+</div>
+<div class="clear"></div>

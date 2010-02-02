@@ -1,0 +1,72 @@
+<% form_for(@event) do |f| %>
+  <%= f.error_messages %>
+  
+  <fieldset>
+    <legend>Event Info</legend>
+    <div class="rowElem"><%= f.label :name, 'Event name' %>
+    <%= f.text_field :name %></div>
+    
+    <div class="rowElem"><%= f.label :website, 'Event website' %>
+    <%= f.text_field :website %></div>
+    
+  </fieldset>
+  
+  <fieldset>
+    <legend>Venue &amp; Location</legend>
+    <div class="rowElem"><%= f.label :venue_name, 'Venue name' %>
+    <%= f.text_field :venue_name %></div>
+    
+    <div class="rowElem"><%= f.label :address, 'Address' %>
+    <%= f.text_field :address %></div>
+    
+    <div class="rowElem"><%= f.label :city, 'City' %>
+    <%= f.text_field :city, :size => 15 %></div>
+
+    <div class="rowElem"><%= f.label :state, 'State' %>
+    <%= f.text_field :state, :size => 10 %></div>
+
+    <div class="rowElem"><%= f.label :zip, 'Zip' %>
+    <%= f.text_field :zip, :size => 10 %></div>
+  </fieldset>
+  
+  <fieldset>
+    <legend>Date &amp; Time</legend>
+    <div class="rowElem"><%= f.check_box :multi_day %> <%= f.label :multi_day, 'This is a multi-day event', :class => 'check_label' %></div>
+    
+    <div class="rowElem"><%= f.label :starts_on, 'Start date' %>
+    <%= f.text_field :starts_on, :size => 12 %></div>
+    
+    <div class="rowElem"><%= f.label :ends_on, 'End date' %>
+    <%= f.text_field :ends_on, :size => 12 %>    </div>
+  </fieldset>
+  
+  <fieldset>
+    <legend>Event Price &amp; Tickets</legend>
+    <div class="rowElem"><%= check_box_tag 'free', 'yes', @event.price.blank? || @event.price == 0 %> 
+      <%= label_tag 'free', 'This is a FREE event', :class => 'check_label' %></div>
+    
+    <div id="price_info">
+      <div class="rowElem"><%= f.label :price, 'Price $' %> <%= f.text_field :price, :size => 8 %></div>
+      
+      <div class="rowElem"><%= f.check_box :sell_tickets %> <%= f.label :sell_tickets, 'Sell tickets here on PixelCal.com', :class => 'check_label' %></div>
+      
+    </div>
+    
+    
+  </fieldset>
+  
+  <fieldset>
+    <legend>Description</legend>
+    <div class="rowElem"><%= f.text_area :description, :size => '100x30' %></div>
+  </fieldset>
+  
+  <fieldset>
+    <legend>More Options</legend>
+    <div class="rowElem"><%= f.check_box :comments %> <%= f.label :comments, 'Allow commenting &amp; testimonials', :class => 'check_label' %> 
+      <span><a href="http://disqus.com">powered by Disqus</a></span></div>
+  </fieldset>
+  
+  
+    <%= f.submit 'Save this Event' %>
+  
+<% end %>

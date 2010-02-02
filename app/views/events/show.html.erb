@@ -1,0 +1,108 @@
+<% content_for :head do %>
+  <script type='text/javascript'>
+    //<![CDATA[
+      var userMapData = [{"location":{"lng":<%= @event.lng %>,"lat":<%= @event.lat %>}}]
+      var userMapCenter = {lat: <%= @event.lat %>, lng: <%= @event.lng %>};
+      function initialize() {
+        if (GBrowserIsCompatible()) {
+          var map = new GMap2(document.getElementById("map_canvas"));
+          map.setCenter(new GLatLng(<%= @event.lat %>, <%= @event.lng %>), 13);
+          map.setUIToDefault();
+          var point = new GLatLng(<%= @event.lat %>,<%= @event.lng %>);
+          map.addOverlay(new GMarker(point));
+          
+        }
+      }
+    //]]>
+  </script>
+<% end %>
+
+<% content_for :onload do %>
+  initialize();
+<% end %>
+
+<% content_for :sidebar do %>
+  <% if @event.price > 0 && !@event.sell_tickets %>
+  <div id="buy_outer">
+    <div id="buy_inner">
+      <h3><%= number_to_currency(@event.price) %></h3>
+      <h4>Visit the <%= link_to 'event website', @event.website %> to register</h4>
+    </div>
+  </div>
+  <% end %>
+
+  <% if @event.sell_tickets %>
+  <div id="buy_outer">
+    <div id="buy_inner">
+      <h3>Buy Tickets Now</h3>
+      <h4>Tickets for this event are <%= number_to_currency(@event.price) %></h4>
+      <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+        <input name="cmd" type="hidden" value="_xclick" />
+        <input name="business" type="hidden" value="billing@bigfolio.com" />
+        <input name="item_name" type="hidden" value="NextProof Theme: <%= @event.name %>" />
+      
+        <input name="item_number" type="hidden" value="<%= @event.id %>" />
+        <input name="amount" type="hidden" value="<%= @event.price %>" />
+        <input name="no_shipping" type="hidden" value="0" />
+        <input name="no_note" type="hidden" value="1" />
+        <input name="currency_code" type="hidden" value="USD" />
+        <input name="lc" type="hidden" value="US" />
+        <input name="bn" type="hidden" value="PP-BuyNowBF" />
+        <input name="notify_url" type="hidden" value="<%= "payment_notifications_url" %>" />
+        <input name="return" type="hidden" value="<%= "thanks_url" %>" />
+        <p><input alt="PayPal - The safer, easier way to pay online!" name="submit" src="https://www.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif" type="image" /> <img src="https://www.paypal.com/en_US/i/scr/pixel.gif" border="0" alt="" width="1" height="1" /></p>
+      </form>
+    </div>
+  </div>
+  <% end %>
+  
+
+  <h3>Location</h3>
+
+  <div id="map_outer" style="padding:5px;border:1px solid #ccc">
+    <div id="map_canvas" style="height:300px"></div>
+  </div>
+  <p><%= link_to 'View larger map', map_event_url %></p>
+
+  <%= link_to 'Edit', edit_event_path(@event) %> |
+  <%= link_to 'Back', events_path %>
+<% end %>
+
+<h2><%= @event.name %></h2>
+
+<div id="essentials">
+  <h3 id="event_date"><%= @event.starts_on.strftime('%A %B %d, %Y') %></h3>
+  <p><%= @event.display_address %></p>
+  <p><%= link_to 'Visit the event website', @event.website %></p>
+</div>
+
+<div id="description">
+  <%= simple_format(@event.description) %>
+</div>
+
+<% if @event.comments %>
+<h3>Comments &amp; Testimonials</h3>
+<div id="disqus_thread"></div>
+<script type="text/javascript" src="http://disqus.com/forums/pixelcal/embed.js"></script>
+<noscript>
+  <a href="http://disqus.com/forums/pixelcal/?url=ref">View the discussion thread.</a>
+</noscript>
+
+
+  <% content_for :closing do %>
+    <script type="text/javascript">
+    //<![CDATA[
+    (function() {
+    	var links = document.getElementsByTagName('a');
+    	var query = '?';
+    	for(var i = 0; i < links.length; i++) {
+    	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+    		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+    	}
+    	}
+    	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/pixelcal/get_num_replies.js' + query + '"></' + 'script>');
+    })();
+    //]]>
+    </script>
+  <% end %>
+<% end %>
