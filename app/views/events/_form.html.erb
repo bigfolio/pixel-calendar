@@ -22,11 +22,15 @@
     <div class="rowElem"><%= f.label :city, 'City' %>
     <%= f.text_field :city, :size => 15 %></div>
 
-    <div class="rowElem"><%= f.label :state, 'State' %>
+    <div class="rowElem"><%= f.label :state, 'State / Province' %>
     <%= f.text_field :state, :size => 10 %></div>
 
     <div class="rowElem"><%= f.label :zip, 'Zip' %>
     <%= f.text_field :zip, :size => 10 %></div>
+    
+    <div class="rowElem"><%= f.label :country %>
+    <%= f.country_select(:country, ['United States', 'Canada', 'Mexico', 'United Kingdom', 'Australia'], :include_blank => true) %></div>
+    
   </fieldset>
   
   <fieldset>

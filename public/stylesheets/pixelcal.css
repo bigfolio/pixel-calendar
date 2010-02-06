@@ -172,6 +172,14 @@ ul.home_list li span {
 
 }
 
+/* Event detail styles */
+#essentials {
+	
+}
+h3#event_date {
+	font-size:1.1em;
+}
+
 /* Form styles */
 fieldset {
 	border:1px solid #45a8bc;

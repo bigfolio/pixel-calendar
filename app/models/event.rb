@@ -25,7 +25,11 @@ class Event < ActiveRecord::Base
   end
   
   def map_address
-    "#{self.address} #{self.city},#{self.state} #{self.zip}"
+    if country == 'United States' || country.blank?
+      "#{self.address} #{self.city},#{self.state} #{self.zip}"
+    else
+      "#{self.address}, #{self.city}, #{self.state} #{self.zip}, #{self.country}"
+    end
   end
   
   def display_address(divider = '<br />')
