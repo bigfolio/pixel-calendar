@@ -17,6 +17,7 @@ class EventsController < ApplicationController
   # GET /events/1.xml
   def show
     @event = Event.find(params[:id])
+    @page_title = "#{@event.name} (#{@event.city})"
 
     respond_to do |format|
       format.html # show.html.erb
