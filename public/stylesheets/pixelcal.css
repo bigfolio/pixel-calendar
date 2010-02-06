@@ -211,12 +211,23 @@ label.check_label {
 /* Footer styles */
 #footer_outer {
 	background:#111;
-	color:#45a8bc;
+	color:#777;
 	padding-top:20px;
 }
 #footer_inner {
 
 }
+#footer_outer p {
+	font-size:.8em;
+	text-align: justify;
+		letter-spacing: 1px;
+}
+#footer_outer a {
+	color:#777;
+}
 #footer_outer h2 {
-	font-size:1em;
+	font-family: Arial, "MS Trebuchet", sans-serif;
+	color:#45A8BC;
+	font-size:1.1em;
+	letter-spacing: 0;
 }
