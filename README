@@ -17,3 +17,4 @@ This code powers the photography and videography event directory at http://pixel
    and then you'll need to update the script tag in the head of app/views/layouts/application.html.erb
 6. There is a commenting option when viewing an event. It's powered by Disqus. You'll need to replace the 
    code in app/views/events/show.html.erb with your own Disqus code
+7. Remove the Google Analytics code from both layout files and replace it with your own
