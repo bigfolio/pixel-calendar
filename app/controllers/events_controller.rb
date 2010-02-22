@@ -1,6 +1,8 @@
 class EventsController < ApplicationController
 
   before_filter :login_required, :only => [:new, :create, :edit]
+  before_filter :can_edit?, :only => [:edit, :update]
+
 
   # GET /events
   # GET /events.xml
@@ -86,4 +88,11 @@ class EventsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  protected
+  
+    def can_edit? 
+      redirect_to root_url unless current_user && current_user.events.include?(Event.find(params[:id]))
+    end
+  
 end
