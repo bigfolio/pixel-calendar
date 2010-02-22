@@ -22,7 +22,7 @@
 <% end %>
 
 <% content_for :sidebar do %>
-  <% if @event.price > 0 && !@event.sell_tickets %>
+  <% if @event.price.to_f > 0 && !@event.sell_tickets %>
   <div id="buy_outer">
     <div id="buy_inner">
       <h3><%= number_to_currency(@event.price) %></h3>
