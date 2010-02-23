@@ -13,13 +13,14 @@ class SiteController < ApplicationController
   def calendar
     @events = Event.all
     @calendar = Icalendar::Calendar.new
+    @calendar.custom_property('X-WR-CALNAME','PixelCal Photo/Video Events')
     
     @events.each do |e|
       event = Icalendar::Event.new
       event.start = e.starts_on.strftime("%Y%m%dT%H%M%S")
       event.end = e.ends_on.strftime("%Y%m%dT%H%M%S") unless e.ends_on.nil?
       event.summary = e.name
-      event.description = e.description
+      event.description = e.description.gsub(/<\/?[^>]*>/, "")
       event.location = e.venue_name
       @calendar.add event
       # response.headers['Content-Type'] = "text/calendar; charset=UTF-8"
