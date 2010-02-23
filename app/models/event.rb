@@ -20,6 +20,10 @@ class Event < ActiveRecord::Base
     events = find(:all, :order => 'created_at DESC', :conditions => ["starts_on > ?", Time.now], :limit => limit)
   end
   
+  def self.cities()
+    events = find_by_sql("select events.*, count(*) as count from events group by city")
+  end
+  
   def geocode
     @geocode ||= GoogleGeocoder.geocode(self.map_address)
   end

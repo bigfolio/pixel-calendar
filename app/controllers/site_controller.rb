@@ -3,11 +3,14 @@ require 'icalendar'
 class SiteController < ApplicationController
   
   def index
-    
     @upcoming = Event.upcoming
-    @recently_added = Event.recently_added
-    
+    @recently_added = Event.recently_added    
     render :layout => 'home'
+  end
+  
+  def search
+    search_condition = "%" + params[:q] + "%"
+    @events = Event.find(:all, :conditions => ['name LIKE ? OR description LIKE ?', search_condition, search_condition])
   end
 
   def calendar
