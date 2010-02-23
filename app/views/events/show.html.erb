@@ -77,6 +77,7 @@
   <h3 id="event_date">
     <%= @event.starts_on.strftime('%a %B %e, %Y') %>
     <%= ' to ' + @event.ends_on.strftime('%a %B %e, %Y') if @event.multi_day  %>
+    <span class="export"><%= link_to 'iCal', event_path(@event, :format => :ics) %></span>
   </h3>
   <p><%= @event.display_address %></p>
   <p><%= link_to 'Visit the event website', @event.website %></p>

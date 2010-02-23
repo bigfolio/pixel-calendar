@@ -17,14 +17,15 @@ class SiteController < ApplicationController
     @events = Event.all
     @calendar = Icalendar::Calendar.new
     @calendar.custom_property('X-WR-CALNAME','PixelCal Photo/Video Events')
-    
     @events.each do |e|
       event = Icalendar::Event.new
       event.start = e.starts_on.strftime("%Y%m%dT%H%M%S")
       event.end = e.ends_on.strftime("%Y%m%dT%H%M%S") unless e.ends_on.nil?
       event.summary = e.name
-      event.description = e.description.gsub(/<\/?[^>]*>/, "")
-      event.location = e.venue_name
+      event.description = e.description.blank? ? 'No description available' : e.description.gsub(/<\/?[^>]*>/, "") 
+      event.location = "#{e.venue_name} (#{e.city})"
+      event.url = url_for e
+      event.uid = "#{e.id}@pixelcal.com"
       @calendar.add event
       # response.headers['Content-Type'] = "text/calendar; charset=UTF-8"
     end

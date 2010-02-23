@@ -1,3 +1,5 @@
+require 'icalendar'
+
 class EventsController < ApplicationController
 
   before_filter :login_required, :only => [:new, :create, :edit]
@@ -24,6 +26,21 @@ class EventsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @event }
+      format.ics do
+        @calendar = Icalendar::Calendar.new
+        @calendar.custom_property('X-WR-CALNAME','PixelCal Photo/Video Events')
+        event = Icalendar::Event.new
+        event.start = @event.starts_on.strftime("%Y%m%d")
+        event.end = @event.ends_on.strftime("%Y%m%d") unless @event.ends_on.nil?
+        event.summary = @event.name
+        event.description = @event.description.blank? ? 'No description available' : @event.description.gsub(/<\/?[^>]*>/, "") 
+        event.location = "#{@event.venue_name} (#{@event.city})"
+        event.url = url_for @event
+        event.uid = "#{@event.id}@pixelcal.com"
+        @calendar.add event
+        @calendar.publish
+        send_data @calendar.to_ical, :layout => false, :content_type => "text/calendar; charset=UTF-8", :disposition => "inline; filename=pixelcal.ics", :filename => "pixelcal.ics"
+      end
     end
   end
 
