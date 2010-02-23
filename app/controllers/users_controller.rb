@@ -1,7 +1,29 @@
 class UsersController < ApplicationController
+  
+  before_filter :can_edit?, :only => [:edit, :update]
+  
   # render new.rhtml
   def new
     @user = User.new
+  end
+ 
+  def edit
+    @user = current_user
+  end
+  
+  def update
+    @user = current_user
+
+    respond_to do |format|
+      if @user.update_attributes(params[:user])
+        flash[:notice] = 'Profile was successfully updated.'
+        format.html { redirect_to root_url }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+      end
+    end
   end
  
   def create
@@ -32,5 +54,11 @@ class UsersController < ApplicationController
     end
     redirect_to '/'
   end
+  
+  protected
+  
+    def can_edit?
+      current_user 
+    end
   
 end
