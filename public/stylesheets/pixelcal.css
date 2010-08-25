@@ -192,6 +192,15 @@ h3#event_date span a {
 	text-decoration: none;
 	color:#3894ce;
 }
+/* Event Description Styles */
+#description h4 {
+	margin-bottom:10px;
+	border-bottom:1px solid #999;
+}
+#description p, #description div {
+	margin-bottom:10px;
+}
+
 /* Form styles */
 fieldset {
 	border:1px solid #45a8bc;
